@@ -3,12 +3,12 @@
 # Computes relative influence of each brt iteration epoch
 # plots pdp plots
 # Revised May 2018
-# Created by David Kanyari -daudi2010@gmail.com | Nancy Waithera
+# Created by David Kanyari -daudi2010@gmail.com 
 # All rights reserved
 
 # set working #directory
 
-setwd("E:\\NancyRStudyArea\\Final_datasets")
+setwd("E:\\datasets")
 # Libraries
 require(gbm) # load required libraries
 require(dismo)
@@ -31,8 +31,8 @@ source('utils.R')# file utilities..Important!
 dependent <- c("dependent")# folder with dependent rasters
 constants <-
   c("constants")# static data folder - Elevation, slope, roads, towns,rivers
-#folders <- c("pov", "pop", "precip", "fires")# variable rasters  #original
-folders <- c("pov2", "pop2", "precip", "fires")# variable rasters
+folders <- c("pov", "pop", "precip", "fires")# variable rasters  #original
+
 #counties in the study area
 counties<-c("study_area2.shp")
 #--------------------------------------------#
@@ -40,15 +40,15 @@ ct<-file_path_sans_ext(counties[1] )# hardcode Study area
 # county
 c<-counties[1]
 # create a #directory  for county
-#dir.create(file.path("data", ct)) #  looping will be done later
+dir.create(file.path("data", ct)) #  looping will be done later
 
 print(counties[1])
 
 # create a #directory for the log per county
-#dir.create(file.path(paste("data", ct,sep="/"),"log"))
+dir.create(file.path(paste("data", ct,sep="/"),"log"))
 
 # craete data folder inside county file
-#dir.create(file.path(paste("data", ct,sep="/"),"data"))
+dir.create(file.path(paste("data", ct,sep="/"),"data"))
 # log file
 logFile<-paste(paste("data", ct,sep="/"),paste("log","Brt_log_file.txt",sep="/"),sep="/")
 cat("BRT log file ... ", file=logFile, append=FALSE, sep = "\n")
@@ -60,14 +60,12 @@ county <- readOGR(dsn = paste("study_area",c,sep = "/"), layer = ct)
 years <-
   
  c(
-   #1995,
-   #2000
-  #,
-   2005
-   , 
-   2010
-   #2014
-   ) # 1990 data not a complete set
+   1995,
+   2000,
+   2005, 
+   2010,
+   2014
+   ) # 
 
 cat ("Extracting values and creating csv for BRT")
 for (i in 1:length(years)) {
@@ -355,8 +353,7 @@ for (i in 1:length(years)) {
     cat(paste("CV ROC",roc2,sep = "  : "), file=logFile, append=TRUE, sep = "\n")
     cat(paste("CV Deviance",dev,sep = "  : "), file=logFile, append=TRUE, sep = "\n")
     cat(paste("CV Deviance Se",response.tc5.lr005$cv.statistics$deviance.se,sep = "  : "), file=logFile, append=TRUE, sep = "\n")
-    cat(paste("CV correlation",response.tc5.lr005$cv.statistics$correlation.mean,sep = "  : "), file=logFile, append=TRUE, sep = "\n")
-    cat(paste("CV correlation Se",response.tc5.lr005$cv.statistics$correlation.se,sep = "  : "), file=logFile, append=TRUE, sep = "\n")
+    
     #cat(paste("RelativeInf",summary(response.tc5.lr005),sep = "  : "), file=logFile, append=TRUE, sep = "\n")
     
     
@@ -375,7 +372,7 @@ for (i in 1:length(years)) {
     # fitted values
     cat("Plot fitted values\n")
     
-    #gbm.plot.fits(response.tc5.lr005)
+    gbm.plot.fits(response.tc5.lr005)
     
     
     
@@ -383,7 +380,7 @@ for (i in 1:length(years)) {
    
     # Relative influence
     #cat("Relative influence..\n")
-    #cat(paste("Relative influence",summary(response.tc5.lr005),sep = "  : "), file=logFile, append=TRUE, sep = "\n")
+    cat(paste("Relative influence",summary(response.tc5.lr005),sep = "  : "), file=logFile, append=TRUE, sep = "\n")
     
     print(summary(response.tc5.lr005))
     
