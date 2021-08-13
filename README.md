@@ -6,5 +6,5 @@ A R script that runs Boosted Regression Trees(BRT)  on epochs of land use  datas
 # Computes relative influence of each brt iteration epoch
 # plots pdp plots
 # Revised May 2018
-# Created by David Kanyari -daudi2010@gmail.com 
+# Created by David Kanyari 
 # All rights reserved
